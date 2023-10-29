@@ -12,6 +12,8 @@ def get_num_hexagons():
 
 def get_color_choice():
     available_colors = [ru.RED, ru.YELLOW, ru.GREEN, ru.BLUE, ru.BLACK, ru.VIOLET, ru.ORANGE]
+    available_colors_eng = {ru.RED: 'red', ru.YELLOW: 'yellow', ru.GREEN: 'green', ru.BLUE: 'blue',
+                            ru.BLACK: 'black', ru.VIOLET: 'violet', ru.ORANGE: 'orange'}
 
     print(ru.ACCEPTABLE_COLORS)
     for element in available_colors:
@@ -21,17 +23,22 @@ def get_color_choice():
     while color_name1 not in available_colors:
         color_name1 = input(ru.COLOR1_INPUT_AGAIN)
 
+    color_name1 = available_colors_eng.setdefault(color_name1)
+
     color_name2 = input('\n' + ru.COLOR2_INPUT)
     while color_name2 not in available_colors:
-        color_name2 = input(ru)
+        color_name2 = input(ru.COLOR2_INPUT_AGAIN)
+
+    color_name2 = available_colors_eng.setdefault(color_name2)
 
     colors = [color_name1, color_name2]
 
     return colors
 
 
-def draw_hexagon(x, y, side_len, color):
-    t.pencolor(color)
+def draw_hexagon(x, y, side_length, color):
+    t.speed(0)
+    t.pencolor('black')
     t.fillcolor(color)
     t.pu()
     t.goto(x, y)
@@ -39,7 +46,7 @@ def draw_hexagon(x, y, side_len, color):
     t.begin_fill()
     t.setheading(30)
     for i in range(6):
-        t.forward(side_len)
+        t.forward(side_length)
         t.left(300)
     t.end_fill()
     t.setheading(0)
@@ -48,21 +55,37 @@ def draw_hexagon(x, y, side_len, color):
 color_names = get_color_choice()
 quantity = get_num_hexagons()
 
-t.speed(5000)
 d = 500 // quantity
 side_len = d // (3 ** 0.5)
-number_rows = int(500 // (2 * side_len))
 
-for number in range(number_rows+1):
+counter = 1
+
+for number in range(quantity):
+    if int(counter) % 2 == 0:
+        fill_color = color_names[1]
+    else:
+        fill_color = color_names[0]
+
     y_1 = 250 - 0.5 * side_len - (1.5 * side_len) * number
-    for hexagon in range(quantity+1):
-        if number == 0:
+    for hexagon in range(quantity):
+        if number % 2 == 0:
             x_1 = -250 + (3 ** 0.5) * side_len * 0.5 + (3 ** 0.5) * side_len * hexagon
-            draw_hexagon(x_1, y_1, side_len, 'green')
-        elif number % 2 == 0:
-            x_1 = -250 + (3 ** 0.5) * side_len * 0.5 + (3 ** 0.5) * side_len * hexagon
-            draw_hexagon(x_1, y_1, side_len, 'green')
+            draw_hexagon(x_1, y_1, side_len, fill_color)
+
+            if fill_color == color_names[1]:
+                fill_color = color_names[0]
+            else:
+                fill_color = color_names[1]
+
         else:
             x_1 = -250 + (3 ** 0.5) * side_len * hexagon
-            draw_hexagon(x_1, y_1, side_len, 'green')
+            draw_hexagon(x_1, y_1, side_len, fill_color)
+
+            if fill_color == color_names[1]:
+                fill_color = color_names[0]
+            else:
+                fill_color = color_names[1]
+
+    counter = counter + 0.5
+
 t.mainloop()
