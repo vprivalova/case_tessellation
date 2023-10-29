@@ -1,3 +1,9 @@
+"""
+Team:
+Nizovtseva Anastasia 68
+Privalova Viktoria 52
+"""
+
 import turtle as t
 import ru_local as ru
 
@@ -16,6 +22,7 @@ def get_color_choice():
                             ru.BLACK: 'black', ru.VIOLET: 'violet', ru.ORANGE: 'orange'}
 
     print(ru.ACCEPTABLE_COLORS)
+
     for element in available_colors:
         print(element)
 
@@ -67,6 +74,7 @@ for number in range(quantity):
         fill_color = color_names[0]
 
     y_1 = 250 - 0.5 * side_len - (1.5 * side_len) * number
+
     for hexagon in range(quantity):
         if number % 2 == 0:
             x_1 = -250 + (3 ** 0.5) * side_len * 0.5 + (3 ** 0.5) * side_len * hexagon
