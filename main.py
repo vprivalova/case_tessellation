@@ -1,7 +1,7 @@
 """
 Team:
-Nizovtseva Anastasia 68
-Privalova Viktoria 52
+Nizovtseva Anastasia 92
+Privalova Viktoria 85
 """
 
 import turtle as t
